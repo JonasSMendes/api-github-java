@@ -4,6 +4,7 @@ import com.example.consumindo_api_github.client.GithubClient;
 import com.example.consumindo_api_github.dto.RepositoryResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,8 +21,15 @@ public class GithubController {
     }
 
     @GetMapping("/repos")
-    public ResponseEntity<List<RepositoryResponse> > listRepos (){
-        return null;
+    public ResponseEntity<List<RepositoryResponse> > listRepos (@RequestHeader("token") String token){
+
+       var repost = githubClient.listRepos(
+                "Bearer " + token,
+                null,
+                "public"
+        );
+
+       return ResponseEntity.ok(repost);
     }
 
 }
