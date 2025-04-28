@@ -2,11 +2,9 @@ package com.example.consumindo_api_github.controller;
 
 import com.example.consumindo_api_github.client.GithubClient;
 import com.example.consumindo_api_github.dto.RepositoryResponse;
+import com.example.consumindo_api_github.dto.ResponseUsers;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,6 +28,18 @@ public class GithubController {
         );
 
        return ResponseEntity.ok(repost);
+    }
+
+    @GetMapping("/users/{username}")
+    public ResponseEntity<ResponseUsers> usersResponse (@PathVariable String username){
+
+        var userRepos = githubClient.getUserByName(
+                username,
+                "application/vnd.github+json",
+                null
+        );
+
+        return ResponseEntity.ok(userRepos);
     }
 
 }
